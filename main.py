@@ -1,76 +1,75 @@
 
-
-yes = "yes"
-costa = 0
-costb = 0
-costc = 0
-cost= 0
+#costa = 0
+#costb = 0
+#costc = 0
+cost = 0
 unit = 0
-fruit_type = "you brought apples for $2"
 
+fruit_type = ""
+
+Fruit_options = ["apple", "grape", "orange"]
+
+#apple = (f"1) {Fruit_options[0]}")
+#grape = (f"2) {Fruit_options[1]}")
+#orange =(f"3) {Fruit_options[2]}")
 
 print("Welcome to the GC Fruit Market!")
 name = input("What is your name?")
-
-Fruit_options = ["Apple ", "Grape ", "Orange"]
-apple = (f"1) {Fruit_options[0]}")
-grape = (f"2) {Fruit_options[1]}")
-orange =(f"3) {Fruit_options[2]}")
+print(f"Welcome {name}")
 
 print("The fruit options are:")
 
-print(f"1) {Fruit_options[0]}")
-print(f"2) {Fruit_options[1]}")
-print(f"3) {Fruit_options[2]}")
-fruit_type = input(f"Welcome {name}. Which Fruit would you like to buy?")
+print(Fruit_options)
 
-print(fruit_type)
+def my_function():
+   global fruit_type
+   fruit_type = input("Which fruit would you like to buy? ").lower()
+   print(Fruit_options)
 
-if fruit_type == "1":
- costa += 2
- unit += 1
- print("you brought apples for $2")
+my_function()
 
-if fruit_type == "2":
- costb += 1
- unit += 1
- print("you brought Grapes for $1")
+fruit_price = {"apple": 2, "grape": 1, "orange": 3}
 
-if fruit_type == "3":
- costc += 3
- unit += 1
- print("you brought oranges for $3")
+buy1 = f"1) You bought apples for ${fruit_price['apple']}"
+buy2 = f"2) You bought grapes for ${fruit_price['grape']}"
+buy3 = f"3) You bought oranges for ${fruit_price['orange']}"
 
-fruit = input("Would you like to buy another piece of fruit? y/n")
-if fruit == 'yes' or 'Yes':
-  print(apple,
-        grape,
-        orange)
-else:
-  breakpoint()
+if fruit_type == "apple":
+   print(buy1)
+   cost += fruit_price['apple']
+   unit += 1
 
+if fruit_type == "grape":
+   print(buy2)
+   cost += fruit_price['grape']
+   unit += 1
 
-fruit_type = input("Which Fruit would you like to buy?")
-print(fruit_type)
+if fruit_type == "orange":
+   print(buy3)
+   cost += fruit_price['orange']
+   unit += 1
 
-fruit = input("Would you like to buy another piece of fruit? y/n")
-if fruit == 'yes' or 'Yes':
-  print(apple,
-        grape,
-        orange)
-else:
-  breakpoint()
+def another():
+   global cost, unit
+   fruit = input("Would you like to buy another piece of fruit? y/n").lower()
+   if fruit in ['yes', 'y']:
+       print(Fruit_options[0], Fruit_options[1], Fruit_options[2])
+       my_function()
+       another()
+   else:
+       print('Thank you for shopping. Goodbye!')
 
-print(f"order for {name}")
-print(f"{unit} apple(s) at ${costa} apiece")
-print(f"{unit} grape(s) at ${costb} apiece")
-print(f"{unit} oranges(s) at ${costc} apiece")
-print(fruit_type)
-price = (costa + costb + costc)
-x = (price)
+another()
 
-tax = .25
+print(f"Order for {name}")
+print(f"{unit} apple(s) at $2 apiece")
+print(f"{unit} grape(s) at $1 apiece")
+print(f"{unit} orange(s) at $3 apiece")
 
-subtotal = print(f"subtotol ${price}")
-Taxes = print(f"5% {tax}")
-total: print(price + tax)
+tax = 0.25
+subtotal = cost
+total = cost + (cost + tax)
+
+print(f"Subtotal: ${subtotal}")
+print(f"5% Tax: ${subtotal + tax}")
+print(f"Total: ${total}")
