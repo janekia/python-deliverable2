@@ -1,65 +1,52 @@
+class FruitMarket:
+    def __init__(self):
+        self.basket = {"Apple": 0, "Grape": 0, "Orange": 0}
+        self.prices = {"Apple": 2, "Grape": 1, "Orange": 3}
+        self.customer_name = ""
 
-cost = 0
-fruit_counter = 0
+    def display_menu(self):
+        print("Welcome to the GC Fruit Market!")
+        self.customer_name = input("What is your name?\n> ")
+        print(f"\nWelcome {self.customer_name}. Which Fruit would you like to buy?")
 
-fruit_type = ""
+    def buy_fruit(self):
+        while True:
+            self.show_menu()
+            choice = input("> ")
 
-Fruit_options = ["apple $2", "grape $1", "orange $3"]
+            if choice.isdigit() and 1 <= int(choice) <= 3:
+                fruit_name = list(self.prices.keys())[int(choice) - 1]
+                self.basket[fruit_name] += 1
+                print(f"You bought 1 {fruit_name.lower()} at ${self.prices[fruit_name]}")
 
-print("Welcome to the GC Fruit Market!")
-name = input("What is your name?")
-print(f"Welcome {name}")
+                if input("Would you like to buy another piece of fruit? y/n\n> ").lower() != 'y':
+                    break
+            else:
+                print("Invalid choice. Please choose a valid option.")
 
-print("The fruit options are:")
-print(Fruit_options)
+    def show_menu(self):
+        print("1. Apple $2\n2. Grape $1\n3. Orange $3")
 
-def my_function():
-    global fruit_type, fruit_counter
-    fruit_type = input("Which fruit would you like to buy? ").lower()
-    fruit_counter = int(input("How many do you want to buy?"))
-    print(Fruit_options)
+    def calculate_total(self):
+        sub_total = sum(self.basket[fruit] * self.prices[fruit] for fruit in self.basket)
+        tax = 0.05 * sub_total
+        total = sub_total + tax
 
-my_function()
+        print(f"\nOrder for {self.customer_name}")
+        for fruit, quantity in self.basket.items():
+            print(f"{quantity} {fruit.lower()}(s) at ${self.prices[fruit]} apiece")
 
-fruit_price = {"apple": 2, "grape": 1, "orange": 3}
+        print(f"Sub Total: ${sub_total:.2f}")
+        print(f"5% Tax: ${tax:.2f}")
+        print(f"Total: ${total:.2f}")
 
-buy1 = f"1) You bought apples for ${fruit_price['apple']}"
-buy2 = f"2) You bought grapes for ${fruit_price['grape']}"
-buy3 = f"3) You bought oranges for ${fruit_price['orange']}"
 
-if fruit_type == "apple":
-    print(buy1)
-    cost += fruit_price['apple'] * fruit_counter
+def main():
+    market = FruitMarket()
+    market.display_menu()
+    market.buy_fruit()
+    market.calculate_total()
 
-elif fruit_type == "grape":
-    print(buy2)
-    cost += fruit_price['grape'] * fruit_counter
 
-elif fruit_type == "orange":
-    print(buy3)
-    cost += fruit_price['orange'] * fruit_counter
-
-def another():
-    global cost, fruit_counter
-    fruit = input("Would you like to buy another piece of fruit? y/n").lower()
-    if fruit in ['yes', 'y']:
-        print(Fruit_options[0], Fruit_options[1], Fruit_options[2])
-        my_function()
-        another()
-    else:
-        print('Thank you for shopping. Goodbye!')
-
-another()
-
-print(f"Order for {name}")
-print(f"{fruit_counter} apple(s) at $2 apiece")
-print(f"{fruit_counter} grape(s) at $1 apiece")
-print(f"{fruit_counter} orange(s) at $3 apiece")
-
-tax = 0.25
-subtotal = cost
-total = subtotal + tax
-
-print(tax)
-print(f"5% Tax: ${subtotal}")
-print(f"Total: ${total}")
+if __name__ == "__main__":
+        main()
